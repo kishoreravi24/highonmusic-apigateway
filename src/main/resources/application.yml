@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: songs
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/songs/**
+        - id: playlists
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/podcasts/**
+        - id: podcasts
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/playlists/**
