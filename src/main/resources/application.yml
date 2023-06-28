@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 5000
 
 eureka:
   client:
@@ -13,7 +13,11 @@ spring:
     gateway:
       routes:
         - id: songs
-          uri: http://localhost:8081/
+          uri: http://localhost:8081
+          predicates:
+            - Path=/songs/**
+        - id: songs
+          uri: http://localhost:8181
           predicates:
             - Path=/songs/**
         - id: playlists
@@ -24,3 +28,9 @@ spring:
           uri: http://localhost:8083/
           predicates:
             - Path=/playlists/**
+
+#  ribbon:
+#    eureka:
+#      enabled: true
+#    listOfServers: localhost:8081,localhost:8181
+#    ServerListRefreshInterval: 1000
